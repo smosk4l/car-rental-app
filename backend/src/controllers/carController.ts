@@ -7,13 +7,25 @@ import { prisma } from '../utils/prisma';
 const createCarSchema = z.object({
   make: z.string().min(1),
   model: z.string().min(1),
-  year: z.number().min(1900).max(new Date().getFullYear() + 1),
+  year: z
+    .number()
+    .min(1900)
+    .max(new Date().getFullYear() + 1),
   color: z.string().min(1),
   licensePlate: z.string().min(1),
   pricePerDay: z.number().positive(),
   description: z.string().optional(),
   imageUrl: z.string().url().optional(),
-  category: z.enum(['ECONOMY', 'COMPACT', 'MIDSIZE', 'FULLSIZE', 'PREMIUM', 'LUXURY', 'SUV', 'VAN']),
+  category: z.enum([
+    'ECONOMY',
+    'COMPACT',
+    'MIDSIZE',
+    'FULLSIZE',
+    'PREMIUM',
+    'LUXURY',
+    'SUV',
+    'VAN',
+  ]),
   transmission: z.string().default('MANUAL'),
   fuelType: z.string().default('GASOLINE'),
   seats: z.number().min(1).max(15).default(5),
@@ -21,15 +33,18 @@ const createCarSchema = z.object({
 
 const updateCarSchema = createCarSchema.partial();
 
-export const getAllCars = async (req: Request, res: Response): Promise<void> => {
+export const getAllCars = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const { 
-      category, 
-      minPrice, 
-      maxPrice, 
-      available, 
-      page = '1', 
-      limit = '10' 
+    const {
+      category,
+      minPrice,
+      maxPrice,
+      available,
+      page = '1',
+      limit = '10',
     } = req.query;
 
     const skip = (parseInt(page as string) - 1) * parseInt(limit as string);
@@ -76,7 +91,10 @@ export const getAllCars = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-export const getCarById = async (req: Request, res: Response): Promise<void> => {
+export const getCarById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
 
@@ -110,7 +128,9 @@ export const createCar = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: 'Validation error', details: error.errors });
+      res
+        .status(400)
+        .json({ error: 'Validation error', details: error.errors });
       return;
     }
     console.error('Create car error:', error);
@@ -134,7 +154,9 @@ export const updateCar = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: 'Validation error', details: error.errors });
+      res
+        .status(400)
+        .json({ error: 'Validation error', details: error.errors });
       return;
     }
     console.error('Update car error:', error);

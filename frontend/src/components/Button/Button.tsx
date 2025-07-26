@@ -20,11 +20,11 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   return (
-    <StyledButton 
-      $variant={variant} 
-      $size={size} 
+    <StyledButton
+      $variant={variant}
+      $size={size}
       $fullWidth={props.fullWidth}
-      type={type} 
+      type={type}
       {...props}
     >
       {children}

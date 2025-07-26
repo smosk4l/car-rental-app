@@ -21,7 +21,9 @@ export const StyledInput = styled.input<{ $hasError?: boolean }>`
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: ${({ theme }) => theme.fontSizes.md};
   background-color: ${({ theme }) => theme.colors.white};
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 
   &:focus {
     outline: none;

@@ -16,7 +16,7 @@ export const StyledButton = styled.button<ButtonStyleProps>`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  
+
   ${({ $variant, theme }) => {
     switch ($variant) {
       case 'secondary':
