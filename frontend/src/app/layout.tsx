@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
 import NextAuthProvider from '@/components/NextAuthProvider';
+import { ChakraProvider } from '@/components/ChakraProvider';
 
 export const metadata: Metadata = {
   title: 'Car Rental App',
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <ChakraProvider>
+            <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          </ChakraProvider>
         </NextAuthProvider>
       </body>
     </html>

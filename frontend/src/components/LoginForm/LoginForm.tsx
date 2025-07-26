@@ -67,7 +67,15 @@ const LoginForm: React.FC = () => {
       if (result?.error) {
         setAuthError('Invalid email or password');
       } else if (result?.ok) {
-        router.push('/');
+        // Get session to determine redirect based on role
+        const response = await fetch('/api/auth/session');
+        const session = await response.json();
+
+        if (session?.user?.role === 'ADMIN') {
+          router.push('/dashboard/admin');
+        } else {
+          router.push('/dashboard/user');
+        }
         router.refresh();
       }
     } catch (error) {

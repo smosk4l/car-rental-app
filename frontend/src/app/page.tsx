@@ -1,7 +1,17 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Header from '@/components/Header';
+
+interface SessionUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
 
 const Container = styled.div`
   max-width: 1200px;
@@ -62,6 +72,31 @@ const CTAButton = styled.button`
 `;
 
 export default function HomePage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'loading') return; // Still loading
+
+    if (session?.user) {
+      const user = session.user as SessionUser;
+      if (user.role === 'ADMIN') {
+        router.push('/dashboard/admin');
+      } else {
+        router.push('/dashboard/user');
+      }
+    }
+  }, [session, status, router]);
+
+  // Show loading or redirect for authenticated users
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (session?.user) {
+    return <div>Redirecting...</div>;
+  }
+
   return (
     <>
       <Header />
