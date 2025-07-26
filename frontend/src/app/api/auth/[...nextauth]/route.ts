@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
+import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { api } from '@/lib/api';
 import { AuthResponse } from '@/types';
 
-export default NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -29,29 +29,32 @@ export default NextAuth({
               id: user.id,
               email: user.email,
               name: `${user.firstName} ${user.lastName}`,
+              firstName: user.firstName,
+              lastName: user.lastName,
               role: user.role,
-              token,
+              token: token,
             };
           }
-
-          return null;
         } catch (error) {
           console.error('Authentication error:', error);
-          return null;
         }
+
+        return null;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async jwt({ token, user }: any) {
       if (user) {
         token.role = user.role;
         token.accessToken = user.token;
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async session({ session, token }: any) {
+      if (token && session.user) {
         session.user.id = token.sub!;
         session.user.role = token.role as string;
         session.accessToken = token.accessToken as string;
@@ -61,10 +64,13 @@ export default NextAuth({
   },
   pages: {
     signIn: '/auth/login',
-    signUp: '/auth/register',
   },
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as const,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

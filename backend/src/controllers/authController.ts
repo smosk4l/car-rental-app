@@ -19,7 +19,8 @@ const loginSchema = z.object({
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password, firstName, lastName, phone } = registerSchema.parse(req.body);
+    const { email, password, firstName, lastName, phone } =
+      registerSchema.parse(req.body);
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -63,7 +64,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: 'Validation error', details: error.errors });
+      res
+        .status(400)
+        .json({ error: 'Validation error', details: error.errors });
       return;
     }
     console.error('Registration error:', error);
@@ -107,7 +110,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: 'Validation error', details: error.errors });
+      res
+        .status(400)
+        .json({ error: 'Validation error', details: error.errors });
       return;
     }
     console.error('Login error:', error);
