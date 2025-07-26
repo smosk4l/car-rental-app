@@ -1,18 +1,12 @@
-'use client';
-
 import styled from 'styled-components';
 
-interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'danger' | 'success';
-  size?: 'sm' | 'md' | 'lg';
-  fullWidth?: boolean;
-  disabled?: boolean;
-  children: React.ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+interface ButtonStyleProps {
+  $variant?: 'primary' | 'secondary' | 'danger' | 'success';
+  $size?: 'sm' | 'md' | 'lg';
+  $fullWidth?: boolean;
 }
 
-const StyledButton = styled.button<ButtonProps>`
+export const StyledButton = styled.button<ButtonStyleProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,8 +17,8 @@ const StyledButton = styled.button<ButtonProps>`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   
-  ${({ variant, theme }) => {
-    switch (variant) {
+  ${({ $variant, theme }) => {
+    switch ($variant) {
       case 'secondary':
         return `
           background-color: ${theme.colors.secondary};
@@ -60,8 +54,8 @@ const StyledButton = styled.button<ButtonProps>`
     }
   }}
 
-  ${({ size, theme }) => {
-    switch (size) {
+  ${({ $size, theme }) => {
+    switch ($size) {
       case 'sm':
         return `
           padding: ${theme.spaces.sm} ${theme.spaces.md};
@@ -80,8 +74,8 @@ const StyledButton = styled.button<ButtonProps>`
     }
   }}
 
-  ${({ fullWidth }) =>
-    fullWidth &&
+  ${({ $fullWidth }) =>
+    $fullWidth &&
     `
     width: 100%;
   `}
@@ -96,17 +90,3 @@ const StyledButton = styled.button<ButtonProps>`
     outline-offset: 2px;
   }
 `;
-
-export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
-  size = 'md',
-  type = 'button',
-  children,
-  ...props
-}) => {
-  return (
-    <StyledButton variant={variant} size={size} type={type} {...props}>
-      {children}
-    </StyledButton>
-  );
-};

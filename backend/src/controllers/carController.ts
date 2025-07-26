@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
+import { Prisma, Category } from '@prisma/client';
 import { prisma } from '../utils/prisma';
 
 // Validation schemas
@@ -34,10 +35,10 @@ export const getAllCars = async (req: Request, res: Response): Promise<void> => 
     const skip = (parseInt(page as string) - 1) * parseInt(limit as string);
     const take = parseInt(limit as string);
 
-    const where: any = {};
+    const where: Prisma.CarWhereInput = {};
 
     if (category) {
-      where.category = category;
+      where.category = category as Category;
     }
 
     if (minPrice || maxPrice) {

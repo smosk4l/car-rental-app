@@ -12,9 +12,9 @@ export const generateToken = (payload: JwtPayload): string => {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
 
-  return (jwt as any).sign(payload, jwtConfig.secret, {
+  return jwt.sign(payload, jwtConfig.secret, {
     expiresIn: jwtConfig.expiresIn,
-  });
+  } as any); // Type assertion to resolve jsonwebtoken typing issues
 };
 
 export const verifyToken = (token: string): JwtPayload => {
@@ -22,5 +22,5 @@ export const verifyToken = (token: string): JwtPayload => {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
 
-  return (jwt as any).verify(token, jwtConfig.secret) as JwtPayload;
+  return jwt.verify(token, jwtConfig.secret) as JwtPayload;
 };

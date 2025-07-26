@@ -10,8 +10,8 @@ export const serverConfig = {
 } as const;
 
 export const jwtConfig = {
-  secret: process.env.JWT_SECRET,
-  expiresIn: process.env.JWT_EXPIRES_IN || JWT_CONFIG.DEFAULT_EXPIRES_IN,
+  secret: process.env.JWT_SECRET as string,
+  expiresIn: (process.env.JWT_EXPIRES_IN || JWT_CONFIG.DEFAULT_EXPIRES_IN) as string,
 } as const;
 
 export const dbConfig = {

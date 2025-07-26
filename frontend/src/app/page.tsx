@@ -1,6 +1,7 @@
 'use client';
 
 import styled from 'styled-components';
+import Header from '@/components/Header';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -36,7 +37,11 @@ const Feature = styled.div`
 const Hero = styled.section`
   text-align: center;
   padding: ${({ theme }) => theme.spaces['3xl']} 0;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary}20, ${({ theme }) => theme.colors.secondary}20);
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.colors.primary}20,
+    ${({ theme }) => theme.colors.secondary}20
+  );
   border-radius: ${({ theme }) => theme.radii.xl};
   margin-bottom: ${({ theme }) => theme.spaces.xl};
 `;
@@ -58,39 +63,42 @@ const CTAButton = styled.button`
 
 export default function HomePage() {
   return (
-    <Container>
-      <Hero>
-        <Title>Welcome to Car Rental App</Title>
-        <p>Find and rent the perfect car for your journey</p>
-        <CTAButton>Browse Cars</CTAButton>
-      </Hero>
+    <>
+      <Header />
+      <Container>
+        <Hero>
+          <Title>Welcome to Car Rental App</Title>
+          <p>Find and rent the perfect car for your journey</p>
+          <CTAButton>Browse Cars</CTAButton>
+        </Hero>
 
-      <Features>
-        <Feature>
-          <h3>🚗 Wide Selection</h3>
-          <p>Choose from economy cars to luxury vehicles</p>
-        </Feature>
-        <Feature>
-          <h3>💰 Best Prices</h3>
-          <p>Competitive rates with transparent pricing</p>
-        </Feature>
-        <Feature>
-          <h3>📱 Easy Booking</h3>
-          <p>Book your car in just a few clicks</p>
-        </Feature>
-        <Feature>
-          <h3>🔒 Secure Payment</h3>
-          <p>Safe and secure payment processing</p>
-        </Feature>
-        <Feature>
-          <h3>🌟 Quality Service</h3>
-          <p>Excellent customer service and support</p>
-        </Feature>
-        <Feature>
-          <h3>📍 Multiple Locations</h3>
-          <p>Pick up and drop off at convenient locations</p>
-        </Feature>
-      </Features>
-    </Container>
+        <Features>
+          <Feature>
+            <h3>🚗 Wide Selection</h3>
+            <p>Choose from economy cars to luxury vehicles</p>
+          </Feature>
+          <Feature>
+            <h3>💰 Best Prices</h3>
+            <p>Competitive rates with transparent pricing</p>
+          </Feature>
+          <Feature>
+            <h3>📱 Easy Booking</h3>
+            <p>Book your car in just a few clicks</p>
+          </Feature>
+          <Feature>
+            <h3>🔒 Secure Payment</h3>
+            <p>Safe and secure payment processing</p>
+          </Feature>
+          <Feature>
+            <h3>🌟 Quality Service</h3>
+            <p>Excellent customer service and support</p>
+          </Feature>
+          <Feature>
+            <h3>📍 Multiple Locations</h3>
+            <p>Pick up and drop off at convenient locations</p>
+          </Feature>
+        </Features>
+      </Container>
+    </>
   );
 }
