@@ -49,6 +49,7 @@ import {
   QuickActionsGrid,
   ActionButton,
 } from './style';
+import { useRouter } from 'next/navigation';
 
 const stats = [
   {
@@ -131,6 +132,12 @@ const alerts = [
 ];
 
 const AdminDashboard = () => {
+  const router = useRouter();
+
+  const handleAddCarClick = () => {
+    router.push('/admin/cars/add');
+  };
+
   return (
     <Container>
       {/* Stats Cards */}
@@ -247,7 +254,7 @@ const AdminDashboard = () => {
       </MainGrid>
 
       {/* Quick Actions */}
-      <QuickActionsCard>
+      <QuickActionsCard onClick={handleAddCarClick}>
         <SectionHeader>
           <SectionTitle>Quick Actions</SectionTitle>
         </SectionHeader>

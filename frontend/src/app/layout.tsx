@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
 import NextAuthProvider from '@/components/NextAuthProvider';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'Car Rental App',
@@ -16,7 +17,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+            {children}
+            <Toaster position="top-right" richColors />
+          </StyledComponentsRegistry>
         </NextAuthProvider>
       </body>
     </html>
