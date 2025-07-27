@@ -1,7 +1,9 @@
+'use client';
+
 import styled from 'styled-components';
 import Link from 'next/link';
 
-export const LoginContainer = styled.div`
+export const RegisterContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(
     to bottom right,
@@ -14,7 +16,7 @@ export const LoginContainer = styled.div`
   padding: ${({ theme }) => theme.spaces.md};
 `;
 
-export const LoginCard = styled.div`
+export const RegisterCard = styled.div`
   width: 100%;
   max-width: 28rem;
   background-color: ${({ theme }) => theme.colors.white};
@@ -46,7 +48,7 @@ export const CardContent = styled.div`
   padding: 0 ${({ theme }) => theme.spaces.xl} ${({ theme }) => theme.spaces.xl};
 `;
 
-export const LoginForm = styled.form`
+export const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spaces.md};
@@ -58,6 +60,23 @@ export const FormGroup = styled.div`
   gap: ${({ theme }) => theme.spaces.sm};
 `;
 
+export const FormRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${({ theme }) => theme.spaces.md};
+
+  /* Ensure grid items don't overflow */
+  > * {
+    min-width: 0;
+  }
+
+  /* Ensure inputs within grid items are responsive */
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+`;
+
 export const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.danger};
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -66,6 +85,17 @@ export const ErrorMessage = styled.div`
   padding: ${({ theme }) => theme.spaces.sm};
   background-color: rgba(220, 53, 69, 0.1);
   border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: ${({ theme }) => theme.radii.md};
+`;
+
+export const SuccessMessage = styled.div`
+  color: ${({ theme }) => theme.colors.success || '#28a745'};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  margin-bottom: ${({ theme }) => theme.spaces.md};
+  text-align: center;
+  padding: ${({ theme }) => theme.spaces.sm};
+  background-color: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.2);
   border-radius: ${({ theme }) => theme.radii.md};
 `;
 
