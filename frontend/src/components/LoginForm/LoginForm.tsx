@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Input from '../Input';
-import { Button } from '../Button';
+import Input from '@/components/Input/Input';
+import { Button } from '@/components/Button/Button';
 import {
   FormContainer,
   Title,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession, signOut } from 'next-auth/react';
-import { Button } from '../Button';
+import { Button } from '@/components/Button/Button';
 import {
   HeaderContainer,
   HeaderContent,
