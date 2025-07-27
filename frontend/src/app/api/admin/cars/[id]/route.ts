@@ -85,6 +85,50 @@ async function makeBackendRequest(
   });
 }
 
+// GET /api/admin/cars/[id] - Get car by ID
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const adminCheck = await checkAdminAccess();
+  if (adminCheck) return adminCheck;
+
+  const session = (await getServerSession(authOptions)) as ExtendedSession;
+  const { id } = params;
+
+  try {
+    // Forward request to backend
+    const backendResponse = await makeBackendRequest(
+      `/cars/${id}`,
+      {
+        method: 'GET',
+      },
+      session
+    );
+
+    if (!backendResponse.ok) {
+      if (backendResponse.status === 404) {
+        return NextResponse.json({ error: 'Car not found' }, { status: 404 });
+      }
+
+      const responseData = await backendResponse.json();
+      return NextResponse.json(
+        { error: responseData.error || 'Failed to fetch car' },
+        { status: backendResponse.status }
+      );
+    }
+
+    const carData = await backendResponse.json();
+    return NextResponse.json(carData, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching car:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
 // PUT /api/admin/cars/[id] - Update car by ID
 export async function PUT(
   request: NextRequest,

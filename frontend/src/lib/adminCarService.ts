@@ -41,6 +41,18 @@ export const adminCarService = {
     return response.json();
   },
 
+  // Get car by ID
+  async getCarById(id: string): Promise<Car> {
+    const response = await fetch(`/api/admin/cars/${id}`);
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch car');
+    }
+
+    return response.json();
+  },
+
   // Create a new car
   async createCar(carData: {
     make: string;
