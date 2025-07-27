@@ -1,7 +1,42 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button } from '@/components/UI/Button';
 import Link from 'next/link';
 import { theme } from '@/styles/theme';
+
+// Mixins
+const responsiveHidden = css`
+  display: none;
+  @media (min-width: ${theme.breakpoints.md}) {
+    display: flex;
+  }
+`;
+
+const mobileOnly = css`
+  @media (min-width: ${theme.breakpoints.md}) {
+    display: none;
+  }
+`;
+
+const baseNavLinkStyles = css`
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: ${theme.fontWeights.medium};
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${theme.colors.white};
+  }
+`;
+
+const baseButtonStyles = css`
+  color: ${theme.colors.white};
+  font-weight: ${theme.fontWeights.semibold};
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: ${theme.shadows.lg};
+  }
+`;
 
 export const NavContainer = styled.nav`
   position: fixed;
@@ -9,8 +44,6 @@ export const NavContainer = styled.nav`
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
@@ -41,6 +74,7 @@ export const LogoIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background: ${theme.colors.warning};
 `;
 
 export const LogoText = styled.span`
@@ -50,60 +84,29 @@ export const LogoText = styled.span`
 `;
 
 export const DesktopNav = styled.div`
-  display: none;
-  align-items: center;
+  ${responsiveHidden}
   gap: ${theme.spaces.xl};
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    display: flex;
-  }
 `;
 
 export const NavLink = styled(Link)`
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  font-weight: ${theme.fontWeights.medium};
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: ${theme.colors.white};
-  }
+  ${baseNavLinkStyles}
 `;
 
 export const DesktopActions = styled.div`
-  display: none;
-  align-items: center;
+  ${responsiveHidden}
   gap: ${theme.spaces.md};
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    display: flex;
-  }
 `;
 
-export const DashboardButton = styled(Button)`
-  color: ${theme.colors.white};
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-`;
-
-export const AdminButton = styled(Button)`
-  background: linear-gradient(
-    135deg,
-    ${theme.colors.primary},
-    ${theme.colors.primaryDark}
-  );
-  color: ${theme.colors.white};
-  font-weight: ${theme.fontWeights.semibold};
-  height: 2.25rem;
+export const ActionButton = styled(Button)<{ $isMobile?: boolean }>`
+  ${baseButtonStyles}
+  height: ${props => (props.$isMobile ? 'auto' : '2.25rem')};
+  width: ${props => (props.$isMobile ? '100%' : 'auto')};
   border-radius: ${theme.radii.md};
-  padding: 0 ${theme.spaces.sm};
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: ${theme.shadows.lg};
-  }
+  padding: ${props => (props.$isMobile ? '0.75rem' : `0 ${theme.spaces.sm}`)};
+  background: ${props =>
+    props.$isMobile
+      ? `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.primaryDark})`
+      : theme.colors.warning};
 `;
 
 export const MobileMenuButton = styled.button`
@@ -112,23 +115,17 @@ export const MobileMenuButton = styled.button`
   border: none;
   color: ${theme.colors.white};
   cursor: pointer;
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    display: none;
-  }
+  ${mobileOnly}
 `;
 
 export const MobileMenu = styled.div<{ $isOpen: boolean }>`
+  ${mobileOnly}
   display: ${props => (props.$isOpen ? 'block' : 'none')};
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding: ${theme.spaces.md} 0;
   animation: fadeIn 0.2s ease-in-out;
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    display: none;
-  }
 
   @keyframes fadeIn {
     from {
@@ -149,15 +146,8 @@ export const MobileMenuContent = styled.div`
 `;
 
 export const MobileNavLink = styled(Link)`
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  font-weight: ${theme.fontWeights.medium};
+  ${baseNavLinkStyles}
   padding: ${theme.spaces.sm} ${theme.spaces.md};
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: ${theme.colors.white};
-  }
 `;
 
 export const MobileActions = styled.div`
@@ -167,29 +157,4 @@ export const MobileActions = styled.div`
   padding: ${theme.spaces.md};
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   margin-top: ${theme.spaces.md};
-`;
-
-export const MobileDashboardButton = styled(Button)`
-  width: 100%;
-  color: ${theme.colors.white};
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-`;
-
-export const MobileAdminButton = styled(Button)`
-  width: 100%;
-  background: linear-gradient(
-    135deg,
-    ${theme.colors.primary},
-    ${theme.colors.primaryDark}
-  );
-  color: ${theme.colors.white};
-  font-weight: ${theme.fontWeights.semibold};
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: ${theme.shadows.lg};
-  }
 `;

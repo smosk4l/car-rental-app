@@ -5,7 +5,7 @@ export const theme = {
     secondary: '#6c757d',
     success: '#28a745',
     danger: '#dc3545',
-    warning: '#ffc107',
+    warning: '#f76b07',
     info: '#17a2b8',
     light: '#f8f9fa',
     dark: '#343a40',
@@ -22,8 +22,10 @@ export const theme = {
     gray900: '#212529',
   },
   fonts: {
-    primary: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    heading: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    primary:
+      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    heading:
+      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   fontSizes: {
     xs: '0.75rem',

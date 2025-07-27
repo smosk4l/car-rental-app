@@ -13,15 +13,12 @@ import {
   DesktopNav,
   NavLink,
   DesktopActions,
-  DashboardButton,
-  AdminButton,
+  ActionButton,
   MobileMenuButton,
   MobileMenu,
   MobileMenuContent,
   MobileNavLink,
   MobileActions,
-  MobileDashboardButton,
-  MobileAdminButton,
 } from './styles';
 
 const Navigation = () => {
@@ -38,15 +35,13 @@ const Navigation = () => {
     <NavContainer>
       <Container>
         <NavContent>
-          {/* Logo */}
           <LogoLink href="/">
             <LogoIcon>
-              <Car className="h-6 w-6 text-white" />
+              <Car color="#ffffff" />
             </LogoIcon>
             <LogoText>DriveElite</LogoText>
           </LogoLink>
 
-          {/* Desktop Navigation */}
           <DesktopNav>
             {navItems.map(item => (
               <NavLink key={item.label} href={item.href}>
@@ -55,23 +50,17 @@ const Navigation = () => {
             ))}
           </DesktopNav>
 
-          {/* Desktop Actions */}
           <DesktopActions>
-            <Link href="/dashboard">
-              <DashboardButton>Dashboard</DashboardButton>
-            </Link>
-            <Link href="/admin">
-              <AdminButton>Admin</AdminButton>
+            <Link href="/auth/login">
+              <ActionButton>Login</ActionButton>
             </Link>
           </DesktopActions>
 
-          {/* Mobile Menu Button */}
           <MobileMenuButton onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </MobileMenuButton>
         </NavContent>
 
-        {/* Mobile Menu */}
         <MobileMenu $isOpen={isOpen}>
           <MobileMenuContent>
             {navItems.map(item => (
@@ -84,11 +73,8 @@ const Navigation = () => {
               </MobileNavLink>
             ))}
             <MobileActions>
-              <Link href="/dashboard">
-                <MobileDashboardButton>Dashboard</MobileDashboardButton>
-              </Link>
-              <Link href="/admin">
-                <MobileAdminButton>Admin</MobileAdminButton>
+              <Link href="/auth/login">
+                <ActionButton $isMobile>Login</ActionButton>
               </Link>
             </MobileActions>
           </MobileMenuContent>

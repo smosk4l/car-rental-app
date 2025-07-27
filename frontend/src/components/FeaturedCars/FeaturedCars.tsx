@@ -73,7 +73,7 @@ const FeaturedCars = () => {
           <Badge
             variant="secondary"
             style={{
-              color: '#007bff',
+              color: '#021C3B',
               fontWeight: 600,
               padding: '0.5rem 1rem',
               marginBottom: '1rem',

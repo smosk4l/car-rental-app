@@ -1,9 +1,6 @@
 'use client';
 
-import React from 'react';
-import { CardContent } from '@/components/UI/Card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/UI/Avatar';
-import { Star } from 'lucide-react';
+import { AvatarImage } from '@/components/UI/Avatar';
 import {
   SectionContainer,
   Container,
@@ -12,9 +9,13 @@ import {
   Description,
   TestimonialsGrid,
   TestimonialCard,
+  StyledCardContent,
   StarsContainer,
+  StyledStar,
   Quote,
   AuthorContainer,
+  StyledAvatar,
+  StyledAvatarFallback,
   AuthorInfo,
   AuthorName,
   AuthorRole,
@@ -68,42 +69,28 @@ const TestimonialsSection = () => {
               key={testimonial.id}
               $animationDelay={`${index * 0.2}s`}
             >
-              <CardContent style={{ padding: '2rem' }}>
+              <StyledCardContent>
                 <StarsContainer>
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      style={{
-                        width: '1.25rem',
-                        height: '1.25rem',
-                        fill: '#fbbf24',
-                        color: '#fbbf24',
-                      }}
-                    />
+                    <StyledStar key={i} />
                   ))}
                 </StarsContainer>
 
                 <Quote>&ldquo;{testimonial.content}&rdquo;</Quote>
 
                 <AuthorContainer>
-                  <Avatar style={{ width: '3rem', height: '3rem' }}>
+                  <StyledAvatar>
                     <AvatarImage src="" />
-                    <AvatarFallback
-                      style={{
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        fontWeight: 600,
-                      }}
-                    >
+                    <StyledAvatarFallback>
                       {testimonial.avatar}
-                    </AvatarFallback>
-                  </Avatar>
+                    </StyledAvatarFallback>
+                  </StyledAvatar>
                   <AuthorInfo>
                     <AuthorName>{testimonial.name}</AuthorName>
                     <AuthorRole>{testimonial.role}</AuthorRole>
                   </AuthorInfo>
                 </AuthorContainer>
-              </CardContent>
+              </StyledCardContent>
             </TestimonialCard>
           ))}
         </TestimonialsGrid>

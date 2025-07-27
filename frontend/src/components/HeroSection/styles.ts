@@ -1,5 +1,34 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
+import { Button } from '@/components/UI/Button';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const glassmorphism = `
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+`;
 
 export const HeroContainer = styled.section`
   position: relative;
@@ -52,18 +81,7 @@ export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  animation: fadeIn 0.8s ease-out;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  animation: ${fadeIn} 0.8s ease-out;
 `;
 
 export const MainHeading = styled.h1`
@@ -118,26 +136,13 @@ export const SearchFormContainer = styled.div`
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
-  animation: slideUp 0.8s ease-out 0.3s both;
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  animation: ${slideUp} 0.8s ease-out 0.3s both;
 `;
 
 export const SearchCard = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
+  ${glassmorphism}
   border-radius: 1rem;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: ${({ theme }) => theme.shadows.xl};
 `;
 
@@ -155,7 +160,7 @@ export const SearchField = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
+  ${glassmorphism}
   border-radius: 0.5rem;
   padding: 1rem;
 `;
@@ -187,4 +192,34 @@ export const FieldInput = styled.input`
   &::-webkit-calendar-picker-indicator {
     filter: invert(1);
   }
+`;
+
+export const HeroButton = styled(Button)`
+  font-size: 1.125rem;
+  padding: 1.5rem 2rem;
+`;
+
+export const OutlineButton = styled(Button)`
+  font-size: 1.125rem;
+  padding: 1.5rem 2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+`;
+
+export const SearchButton = styled(Button)`
+  height: 100%;
+  padding: 1rem 0;
+`;
+
+export const IconWrapper = styled.span`
+  margin-left: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+`;
+
+export const SearchIcon = styled.span`
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fbbf24;
 `;

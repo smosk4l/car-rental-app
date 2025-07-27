@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-import { Button } from '@/components/UI/Button';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import {
   HeroContainer,
@@ -20,6 +18,11 @@ import {
   FieldContent,
   FieldLabel,
   FieldInput,
+  HeroButton,
+  OutlineButton,
+  SearchButton,
+  IconWrapper,
+  SearchIcon,
 } from './styles';
 
 const HeroSection = () => {
@@ -53,33 +56,15 @@ const HeroSection = () => {
           </Description>
 
           <ButtonContainer>
-            <Button
-              variant="hero"
-              size="lg"
-              style={{ fontSize: '1.125rem', padding: '1.5rem 2rem' }}
-            >
-              Book Now{' '}
-              <ArrowRight
-                style={{
-                  marginLeft: '0.5rem',
-                  width: '1.25rem',
-                  height: '1.25rem',
-                }}
-              />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              style={{
-                fontSize: '1.125rem',
-                padding: '1.5rem 2rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderColor: 'rgba(255, 255, 255, 0.3)',
-                color: 'white',
-              }}
-            >
+            <HeroButton variant="hero" size="lg">
+              Book Now
+              <IconWrapper>
+                <ArrowRight />
+              </IconWrapper>
+            </HeroButton>
+            <OutlineButton variant="outline" size="lg">
               Browse Fleet
-            </Button>
+            </OutlineButton>
           </ButtonContainer>
         </MainContent>
 
@@ -88,13 +73,9 @@ const HeroSection = () => {
           <SearchCard>
             <SearchGrid>
               <SearchField>
-                <MapPin
-                  style={{
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    color: '#fbbf24',
-                  }}
-                />
+                <SearchIcon>
+                  <MapPin />
+                </SearchIcon>
                 <FieldContent>
                   <FieldLabel>Pickup Location</FieldLabel>
                   <FieldInput type="text" placeholder="Enter city or airport" />
@@ -102,13 +83,9 @@ const HeroSection = () => {
               </SearchField>
 
               <SearchField>
-                <Calendar
-                  style={{
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    color: '#fbbf24',
-                  }}
-                />
+                <SearchIcon>
+                  <Calendar />
+                </SearchIcon>
                 <FieldContent>
                   <FieldLabel>Pickup Date</FieldLabel>
                   <FieldInput type="date" />
@@ -116,26 +93,18 @@ const HeroSection = () => {
               </SearchField>
 
               <SearchField>
-                <Calendar
-                  style={{
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    color: '#fbbf24',
-                  }}
-                />
+                <SearchIcon>
+                  <Calendar />
+                </SearchIcon>
                 <FieldContent>
                   <FieldLabel>Return Date</FieldLabel>
                   <FieldInput type="date" />
                 </FieldContent>
               </SearchField>
 
-              <Button
-                variant="cta"
-                size="lg"
-                style={{ height: '100%', padding: '1rem 0' }}
-              >
+              <SearchButton variant="cta" size="lg">
                 Search Cars
-              </Button>
+              </SearchButton>
             </SearchGrid>
           </SearchCard>
         </SearchFormContainer>

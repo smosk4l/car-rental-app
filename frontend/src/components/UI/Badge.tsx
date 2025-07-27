@@ -31,7 +31,7 @@ const StyledBadge = styled.div<{ $variant?: string }>`
       case 'secondary':
         return `
           border-color: transparent;
-          background-color: ${theme.colors.secondary};
+          background-color: #F0F5F8;
           color: ${theme.colors.white};
           &:hover {
             background-color: ${theme.colors.gray600};

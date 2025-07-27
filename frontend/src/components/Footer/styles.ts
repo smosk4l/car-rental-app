@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 export const Footer = styled.footer`
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: #021c3b;
   color: ${({ theme }) => theme.colors.white};
-  padding: 3rem 0; /* py-12 */
+  padding: 3rem;
 `;
 
 export const FooterContainer = styled.div`
@@ -25,15 +25,10 @@ export const FooterGrid = styled.div`
 
 export const FooterSection = styled.div``;
 
-export const FooterTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin-bottom: 1rem; /* mb-4 */
-`;
-
 export const FooterSubtitle = styled.h4`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   margin-bottom: 1rem; /* mb-4 */
+  color: #fafafa;
 `;
 
 export const FooterDescription = styled.p`

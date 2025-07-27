@@ -4,7 +4,6 @@ import {
   FooterContainer,
   FooterGrid,
   FooterSection,
-  FooterTitle,
   FooterSubtitle,
   FooterDescription,
   FooterLinks,
@@ -20,7 +19,7 @@ const FooterComponent = () => {
       <FooterContainer>
         <FooterGrid>
           <FooterSection>
-            <FooterTitle>DriveElite</FooterTitle>
+            <FooterSubtitle>DriveElite</FooterSubtitle>
             <FooterDescription>
               Premium car rentals for every journey. Experience luxury,
               reliability, and exceptional service.

@@ -36,8 +36,8 @@ const StyledButton = styled.button<{ $variant?: string; $size?: string }>`
   &:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 2px ${({ theme }) => theme.colors.primary}40,
-      0 0 0 4px ${({ theme }) => theme.colors.primary}20;
+      0 0 0 2px ${({ theme }) => theme.colors.warning}40,
+      0 0 0 4px ${({ theme }) => theme.colors.warning}20;
   }
 
   &:disabled {
@@ -133,7 +133,7 @@ const StyledButton = styled.button<{ $variant?: string; $size?: string }>`
         `;
       case 'hero':
         return `
-          background: linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.primaryDark});
+          background: linear-gradient(135deg, ${theme.colors.warning}, ${theme.colors.warning});
           color: ${theme.colors.white};
           font-weight: ${theme.fontWeights.semibold};
           box-shadow: ${theme.shadows.lg};

@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
 // Animations
-export const fadeIn = keyframes`
+const fadeIn = keyframes`
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -12,7 +12,7 @@ export const fadeIn = keyframes`
   }
 `;
 
-export const scaleIn = keyframes`
+const scaleIn = keyframes`
   from {
     opacity: 0;
     transform: scale(0.95);
@@ -23,7 +23,7 @@ export const scaleIn = keyframes`
   }
 `;
 
-// Styled Components
+// Layout Components
 export const Section = styled.section`
   padding: 5rem 0;
   background-color: ${({ theme }) => theme.colors.white};
@@ -41,29 +41,31 @@ export const Header = styled.div`
   animation: ${fadeIn} 0.6s ease-out;
 `;
 
+// Typography Components
 export const Title = styled.h2`
-  font-size: 2.25rem;
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.gray800};
-  margin-bottom: 1.5rem;
+  margin-bottom: ${({ theme }) => theme.spaces.lg};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: 3rem;
+    font-size: ${({ theme }) => theme.fontSizes['5xl']};
   }
 `;
 
 export const Subtitle = styled.p`
-  font-size: 1.25rem;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   color: ${({ theme }) => theme.colors.gray600};
   max-width: 42rem;
   margin: 0 auto;
-  line-height: 1.75;
+  line-height: ${({ theme }) => theme.lineHeights.relaxed};
 `;
 
+// Grid Layout
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: ${({ theme }) => theme.spaces.xl};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, 1fr);
@@ -74,11 +76,13 @@ export const Grid = styled.div`
   }
 `;
 
+// Card Components
 export const Card = styled.div<{ delay: number }>`
-  border: none;
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.md};
+  padding: ${({ theme }) => theme.spaces.xl};
+  text-align: center;
   transition: all 0.3s ease;
   animation: ${scaleIn} 0.6s ease-out;
   animation-delay: ${({ delay }) => delay * 0.1}s;
@@ -90,15 +94,10 @@ export const Card = styled.div<{ delay: number }>`
   }
 `;
 
-export const CardContent = styled.div`
-  padding: 2rem;
-  text-align: center;
-`;
-
 export const IconContainer = styled.div`
   width: 4rem;
   height: 4rem;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto ${({ theme }) => theme.spaces.lg};
   border-radius: 50%;
   background: linear-gradient(
     135deg,
@@ -122,13 +121,13 @@ export const IconStyled = styled.div<{ color: string }>`
 `;
 
 export const BenefitTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.gray800};
-  margin-bottom: 1rem;
+  margin-bottom: ${({ theme }) => theme.spaces.md};
 `;
 
 export const BenefitDescription = styled.p`
   color: ${({ theme }) => theme.colors.gray600};
-  line-height: 1.75;
+  line-height: ${({ theme }) => theme.lineHeights.relaxed};
 `;

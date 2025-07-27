@@ -9,7 +9,6 @@ import {
   Subtitle,
   Grid,
   Card,
-  CardContent,
   IconContainer,
   IconStyled,
   BenefitTitle,
@@ -86,17 +85,15 @@ const BenefitsSection = () => {
         <Grid>
           {benefits.map((benefit, index) => (
             <Card key={index} delay={index}>
-              <CardContent>
-                <IconContainer>
-                  <IconStyled color={benefit.color}>
-                    <benefit.icon size={32} />
-                  </IconStyled>
-                </IconContainer>
+              <IconContainer>
+                <IconStyled color={benefit.color}>
+                  <benefit.icon size={32} />
+                </IconStyled>
+              </IconContainer>
 
-                <BenefitTitle>{benefit.title}</BenefitTitle>
+              <BenefitTitle>{benefit.title}</BenefitTitle>
 
-                <BenefitDescription>{benefit.description}</BenefitDescription>
-              </CardContent>
+              <BenefitDescription>{benefit.description}</BenefitDescription>
             </Card>
           ))}
         </Grid>
