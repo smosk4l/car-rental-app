@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Backend linting
+echo "🔧 Linting backend..."
+cd backend && npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ Backend linting failed"
+  exit 1
+fi
+
+# Backend type checking
+echo "🔍 Type checking backend..."
+cd ../backend && npx tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ Backend type checking failed"
+  exit 1
+fi
+
+# Frontend linting
+echo "🔧 Linting frontend..."
+cd ../frontend && npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ Frontend linting failed"
+  exit 1
+fi
+
+# Frontend type checking
+echo "🔍 Type checking frontend..."
+cd ../frontend && npx tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ Frontend type checking failed"
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
