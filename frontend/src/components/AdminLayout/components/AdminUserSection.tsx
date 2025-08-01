@@ -48,7 +48,7 @@ export const AdminUserSection = () => {
           <AvatarImage src={user?.image || ''} />
           <AvatarFallback
             style={{
-              background: '#007bff',
+              background: '#f76b07',
               color: 'white',
               fontSize: '0.875rem',
             }}

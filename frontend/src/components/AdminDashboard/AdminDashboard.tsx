@@ -188,11 +188,7 @@ const AdminDashboard = () => {
                       <BookingId>{booking.id}</BookingId>
                       <BookingBadge
                         variant={
-                          booking.status === 'Active'
-                            ? 'default'
-                            : booking.status === 'Pending'
-                              ? 'secondary'
-                              : 'outline'
+                          booking.status === 'Active' ? 'default' : 'outline'
                         }
                       >
                         {booking.status}
@@ -245,7 +241,7 @@ const AdminDashboard = () => {
                   </AlertContent>
                 </AlertItem>
               ))}
-              <AlertButton variant="secondary">
+              <AlertButton variant="primary">
                 View All Notifications
               </AlertButton>
             </AlertsList>

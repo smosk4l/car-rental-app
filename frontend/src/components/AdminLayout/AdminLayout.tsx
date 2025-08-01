@@ -15,9 +15,10 @@ import {
   Main,
   MobileOverlay,
 } from './styles';
+import { ReactNode } from 'react';
 
 interface AdminLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {

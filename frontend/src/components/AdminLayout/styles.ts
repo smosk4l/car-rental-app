@@ -44,7 +44,7 @@ export const LogoSection = styled.div`
 export const LogoIcon = styled.div`
   width: 2.5rem;
   height: 2.5rem;
-  background: #007bff;
+  background: #f76b07;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -88,7 +88,7 @@ export const NavLink = styled(Link)<{ $isActive: boolean }>`
   ${props =>
     props.$isActive
       ? `
-    background: #007bff;
+    background: #021C3B;
     color: white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   `
@@ -225,7 +225,7 @@ export const NotificationBadge = styled.div`
   right: -0.25rem;
   width: 0.75rem;
   height: 0.75rem;
-  background: #007bff;
+  background: #f76b07;
   border-radius: 50%;
 `;
 

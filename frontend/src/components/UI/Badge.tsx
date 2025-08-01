@@ -58,10 +58,10 @@ const StyledBadge = styled.div<{ $variant?: string }>`
       default:
         return `
           border-color: transparent;
-          background-color: ${theme.colors.primary};
+          background-color: ${theme.colors.secondary};
           color: ${theme.colors.white};
           &:hover {
-            background-color: ${theme.colors.primaryDark};
+            background-color: ${theme.colors.secondary};
           }
         `;
     }

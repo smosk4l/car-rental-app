@@ -118,7 +118,7 @@ export const TitleWithIcon = styled.span`
 export const TitleIcon = styled.div`
   width: 1.25rem;
   height: 1.25rem;
-  color: #007bff;
+  color: #021c3b;
 `;
 
 export const BookingsList = styled.div`
@@ -192,6 +192,9 @@ export const AlertIcon = styled.div<{ $type: 'warning' | 'success' | 'info' }>`
   margin-top: 0.125rem;
   padding: 0.25rem;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: ${props => {
     switch (props.$type) {
       case 'warning':
