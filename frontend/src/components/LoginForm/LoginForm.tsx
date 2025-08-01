@@ -2,20 +2,10 @@
 
 import React from 'react';
 import { useLoginForm } from '@/hooks/useLoginForm';
-import { LoginFormFields } from './LoginFormFields';
-import { LoginFormLinks } from './LoginFormLinks';
 import { UI_TEXT } from '@/constants/ui';
-import {
-  LoginContainer,
-  LoginCard,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  LoginForm,
-} from './styles';
+import { AuthForm, FormField, Button, Alert, LinksContainer, LinkText } from '@/components/SharedForm';
 
-const Login: React.FC = () => {
+const LoginForm: React.FC = () => {
   const {
     register,
     formState: { errors },
@@ -25,26 +15,55 @@ const Login: React.FC = () => {
   } = useLoginForm();
 
   return (
-    <LoginContainer>
-      <LoginCard>
-        <CardHeader>
-          <CardTitle>{UI_TEXT.TITLE}</CardTitle>
-          <CardDescription>{UI_TEXT.DESCRIPTION}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <LoginForm onSubmit={onSubmit}>
-            <LoginFormFields
-              register={register}
-              errors={errors}
-              isLoading={isLoading}
-              error={error}
-            />
-          </LoginForm>
-          <LoginFormLinks />
-        </CardContent>
-      </LoginCard>
-    </LoginContainer>
+    <AuthForm
+      title={UI_TEXT.TITLE}
+      description={UI_TEXT.DESCRIPTION}
+      onSubmit={onSubmit}
+      links={
+        <LinksContainer>
+          <div>
+            {UI_TEXT.LINKS.NO_ACCOUNT}{' '}
+            <LinkText href="/auth/register">
+              {UI_TEXT.LINKS.SIGN_UP}
+            </LinkText>
+          </div>
+          <LinkText href="/">
+            {UI_TEXT.LINKS.BACK_HOME}
+          </LinkText>
+        </LinksContainer>
+      }
+    >
+      {error && <Alert type="error">{error}</Alert>}
+
+      <FormField
+        name="email"
+        label={UI_TEXT.LABELS.EMAIL}
+        type="email"
+        placeholder={UI_TEXT.PLACEHOLDERS.EMAIL}
+        register={register}
+        error={errors.email}
+        disabled={isLoading}
+        autoComplete="email"
+      />
+
+      <FormField
+        name="password"
+        label={UI_TEXT.LABELS.PASSWORD}
+        type="password"
+        placeholder={UI_TEXT.PLACEHOLDERS.PASSWORD}
+        register={register}
+        error={errors.password}
+        disabled={isLoading}
+        autoComplete="current-password"
+      />
+
+      <Button type="submit" disabled={isLoading}>
+        {isLoading
+          ? UI_TEXT.BUTTONS.SUBMITTING
+          : UI_TEXT.BUTTONS.SUBMIT}
+      </Button>
+    </AuthForm>
   );
 };
 
-export default Login;
+export default LoginForm;
