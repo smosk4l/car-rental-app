@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
 import NextAuthProvider from '@/components/NextAuthProvider';
+import QueryProvider from '@/components/QueryProvider';
 import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
@@ -17,10 +18,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <StyledComponentsRegistry>
-            {children}
-            <Toaster position="top-right" richColors />
-          </StyledComponentsRegistry>
+          <QueryProvider>
+            <StyledComponentsRegistry>
+              {children}
+              <Toaster position="top-right" richColors />
+            </StyledComponentsRegistry>
+          </QueryProvider>
         </NextAuthProvider>
       </body>
     </html>
