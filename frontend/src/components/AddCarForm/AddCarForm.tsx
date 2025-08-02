@@ -1,5 +1,5 @@
 import React from 'react';
-import CarForm from '../CarForm/CarForm';
+import CarForm from '../Admin/CarForm/CarForm';
 
 const AddCarForm = () => {
   return <CarForm mode="add" />;

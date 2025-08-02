@@ -1,7 +1,7 @@
 'use client';
 
 import AddCarForm from '@/components/AddCarForm/AddCarForm';
-import AdminLayout from '@/components/AdminLayout/AdminLayout';
+import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout';
 
 const AddCarPage = () => {
   return (

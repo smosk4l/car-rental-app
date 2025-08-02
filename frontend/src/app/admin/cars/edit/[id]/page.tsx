@@ -1,8 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import EditCarForm from '@/components/EditCarForm/EditCarForm';
-import AdminLayout from '@/components/AdminLayout/AdminLayout';
+import EditCarForm from '@/components/Admin/EditCarForm/EditCarForm';
+import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout';
 
 const EditCarPage = () => {
   const params = useParams();

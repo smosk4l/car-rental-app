@@ -29,7 +29,7 @@ import {
   FormActions,
   FormButton,
   LoadingSpinner,
-} from '../AddCarForm/styles';
+} from '../../../components/AddCarForm/styles';
 
 interface CarFormProps {
   mode: 'add' | 'edit';
