@@ -41,6 +41,8 @@ model Car {
   transmission String   @default("MANUAL")
   fuelType     String   @default("GASOLINE")
   seats        Int      @default(5)
+  rating       Float?   @default(0.0)
+  features     String[] @default([])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -80,6 +82,9 @@ enum Category {
   LUXURY
   SUV
   VAN
+  SEDAN
+  SPORTS
+  ELECTRIC
 }
 
 enum ReservationStatus {

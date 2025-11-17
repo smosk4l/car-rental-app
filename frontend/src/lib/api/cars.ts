@@ -11,10 +11,12 @@ export interface Car {
   isAvailable: boolean;
   description?: string;
   imageUrl?: string;
-  category: 'ECONOMY' | 'COMPACT' | 'MIDSIZE' | 'FULLSIZE' | 'PREMIUM' | 'LUXURY' | 'SUV' | 'VAN';
+  category: 'ECONOMY' | 'COMPACT' | 'MIDSIZE' | 'FULLSIZE' | 'PREMIUM' | 'LUXURY' | 'SUV' | 'VAN' | 'SEDAN' | 'SPORTS' | 'ELECTRIC';
   transmission: string;
   fuelType: string;
   seats: number;
+  rating?: number;
+  features?: string[];
   createdAt: string;
   updatedAt: string;
 }
