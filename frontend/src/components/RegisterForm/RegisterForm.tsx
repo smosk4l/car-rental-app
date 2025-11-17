@@ -68,6 +68,17 @@ const RegisterForm: React.FC = () => {
       />
 
       <FormField
+        name="phone"
+        label={REGISTER_UI_TEXT.LABELS.PHONE}
+        type="tel"
+        placeholder={REGISTER_UI_TEXT.PLACEHOLDERS.PHONE}
+        register={register}
+        error={errors.phone}
+        disabled={isLoading}
+        autoComplete="tel"
+      />
+
+      <FormField
         name="password"
         label={REGISTER_UI_TEXT.LABELS.PASSWORD}
         type="password"

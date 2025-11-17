@@ -19,6 +19,13 @@ export const registerSchema = z
       .string()
       .min(1, VALIDATION_MESSAGES.EMAIL.REQUIRED)
       .regex(VALIDATION_PATTERNS.EMAIL, VALIDATION_MESSAGES.EMAIL.INVALID),
+    phone: z
+      .string()
+      .optional()
+      .refine(
+        (val) => !val || VALIDATION_PATTERNS.PHONE.test(val),
+        { message: VALIDATION_MESSAGES.PHONE.INVALID }
+      ),
     password: z
       .string()
       .min(1, VALIDATION_MESSAGES.PASSWORD.REQUIRED)

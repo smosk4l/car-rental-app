@@ -1,0 +1,319 @@
+'use client';
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/Button/Button";
+import { Search, Users, Fuel, Settings, Star, ArrowLeft } from "lucide-react";
+import {
+  Container,
+  Section,
+  Header,
+  Text,
+  Heading,
+  HeroContent,
+  InputWrapper,
+  Flex,
+  Grid,
+  Card,
+  ImageBox,
+  Badge,
+  PageWrapper,
+  CardBody,
+  Description,
+  SpecsGrid,
+  FeaturesRow,
+  PriceSection,
+  Icon,
+} from "@/app/fleet/styles";
+
+// Mock car data
+const vehicles = [
+  {
+    id: "1",
+    make: "Toyota",
+    model: "Camry",
+    year: 2023,
+    color: "Silver",
+    pricePerDay: 45,
+    category: "Sedan",
+    transmission: "Automatic",
+    fuelType: "Gasoline",
+    seats: 5,
+    rating: 4.8,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Reliable and comfortable sedan perfect for business trips and family outings.",
+    features: ["Bluetooth", "Backup Camera", "Cruise Control"],
+  },
+  {
+    id: "2",
+    make: "BMW",
+    model: "X5",
+    year: 2022,
+    color: "Black",
+    pricePerDay: 85,
+    category: "SUV",
+    transmission: "Automatic",
+    fuelType: "Gasoline",
+    seats: 7,
+    rating: 4.9,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Luxury SUV with spacious interior and premium features.",
+    features: ["Leather Seats", "Panoramic Sunroof", "Navigation"],
+  },
+  {
+    id: "3",
+    make: "Honda",
+    model: "Civic",
+    year: 2023,
+    color: "Blue",
+    pricePerDay: 35,
+    category: "Compact",
+    transmission: "Manual",
+    fuelType: "Gasoline",
+    seats: 5,
+    rating: 4.6,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Compact and fuel-efficient car ideal for city driving.",
+    features: ["Apple CarPlay", "Lane Assist", "Rear Camera"],
+  },
+  {
+    id: "4",
+    make: "Tesla",
+    model: "Model 3",
+    year: 2024,
+    color: "White",
+    pricePerDay: 75,
+    category: "Electric",
+    transmission: "Automatic",
+    fuelType: "Electric",
+    seats: 5,
+    rating: 5.0,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Premium electric vehicle with cutting-edge technology.",
+    features: ["Autopilot", "Premium Audio", "Wireless Charging"],
+  },
+  {
+    id: "5",
+    make: "Ford",
+    model: "Mustang",
+    year: 2023,
+    color: "Red",
+    pricePerDay: 95,
+    category: "Sports",
+    transmission: "Manual",
+    fuelType: "Gasoline",
+    seats: 4,
+    rating: 4.7,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "High-performance sports car with powerful V8 engine.",
+    features: ["Sport Mode", "Premium Sound", "Performance Package"],
+  },
+  {
+    id: "6",
+    make: "Mercedes-Benz",
+    model: "C-Class",
+    year: 2023,
+    color: "Gray",
+    pricePerDay: 70,
+    category: "Sedan",
+    transmission: "Automatic",
+    fuelType: "Gasoline",
+    seats: 5,
+    rating: 4.8,
+    imageUrl: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Luxury sedan with elegant design and advanced features.",
+    features: ["Massage Seats", "Ambient Lighting", "Voice Control"],
+  },
+];
+
+export const FleetPage = () => {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("price-asc");
+
+  // Filter and sort vehicles
+  let filteredVehicles = vehicles.filter(
+    (vehicle) =>
+      (vehicle.make.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        vehicle.model.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (categoryFilter === "all" || vehicle.category === categoryFilter)
+  );
+
+  // Sort vehicles
+  filteredVehicles = [...filteredVehicles].sort((a, b) => {
+    switch (sortBy) {
+      case "price-asc":
+        return a.pricePerDay - b.pricePerDay;
+      case "price-desc":
+        return b.pricePerDay - a.pricePerDay;
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return 0;
+    }
+  });
+
+  const categories = ["all", "Sedan", "SUV", "Compact", "Electric", "Sports"];
+
+  return (
+    <PageWrapper>
+      {/* Header */}
+      <Header>
+        <Container>
+          <Button variant="secondary" size="sm" onClick={() => router.push('/')}>
+            <Flex $direction="row" $gap="0.5rem" $align="center">
+              <Icon>
+                <ArrowLeft />
+              </Icon>
+              Back to Home
+            </Flex>
+          </Button>
+          <Button onClick={() => router.push('/auth/login')}>Sign In</Button>
+        </Container>
+      </Header>
+
+      {/* Hero Section */}
+      <Section $gradient>
+        <Container>
+          <HeroContent>
+            <Heading $level={1}>Explore Our Fleet</Heading>
+            <Text $size="lg" $color="#6c757d">
+              Find the perfect vehicle for your journey from our wide selection
+            </Text>
+          </HeroContent>
+
+          {/* Search and Filters */}
+          <Container $padding="0">
+            <InputWrapper $hasIcon>
+              <Search />
+              <input
+                type="text"
+                placeholder="Search by make or model..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </InputWrapper>
+
+            <Container $padding="1rem 0 0">
+              <Flex $gap="1rem" $responsive>
+                <InputWrapper>
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category === "all" ? "All Categories" : category}
+                      </option>
+                    ))}
+                  </select>
+                </InputWrapper>
+
+                <InputWrapper>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                  </select>
+                </InputWrapper>
+              </Flex>
+            </Container>
+          </Container>
+        </Container>
+      </Section>
+
+      {/* Vehicles Grid */}
+      <Section>
+        <Container>
+          <Container $padding="0 0 1.5rem 0">
+            <Text $size="md">
+              Showing {filteredVehicles.length} vehicle{filteredVehicles.length !== 1 ? "s" : ""}
+            </Text>
+          </Container>
+
+          {filteredVehicles.length === 0 ? (
+            <Container $padding="3rem 0">
+              <Text $size="lg" $align="center">
+                No vehicles found matching your criteria
+              </Text>
+            </Container>
+          ) : (
+            <Grid $cols={3}>
+              {filteredVehicles.map((vehicle) => (
+                <Card key={vehicle.id}>
+                  <ImageBox>
+                    <img
+                      src={vehicle.imageUrl}
+                      alt={`${vehicle.make} ${vehicle.model}`}
+                    />
+                    <Badge $position="absolute">{vehicle.category}</Badge>
+                  </ImageBox>
+                  
+                  <CardBody>
+                    <Flex $justify="space-between" $align="flex-start" $direction="row" $gap="0.5rem">
+                      <Flex $direction="column" $gap="0.25rem">
+                        <Heading $level={3} $mb="0">
+                          {vehicle.make} {vehicle.model}
+                        </Heading>
+                        <Text $size="sm">{vehicle.year} • {vehicle.color}</Text>
+                      </Flex>
+                      <Flex $direction="row" $gap="0.25rem" $align="center">
+                        <Icon $color="#f76b07" $fill>
+                          <Star />
+                        </Icon>
+                        <Text $weight="medium" $color="#212529">{vehicle.rating}</Text>
+                      </Flex>
+                    </Flex>
+                    
+                    <Description $size="sm">
+                      {vehicle.description}
+                    </Description>
+                    
+                    <SpecsGrid $cols={3}>
+                      <Flex $direction="row" $gap="0.25rem" $align="center">
+                        <Icon>
+                          <Users />
+                        </Icon>
+                        <span>{vehicle.seats}</span>
+                      </Flex>
+                      <Flex $direction="row" $gap="0.25rem" $align="center">
+                        <Icon>
+                          <Fuel />
+                        </Icon>
+                        <span>{vehicle.fuelType}</span>
+                      </Flex>
+                      <Flex $direction="row" $gap="0.25rem" $align="center">
+                        <Icon>
+                          <Settings />
+                        </Icon>
+                        <span>{vehicle.transmission}</span>
+                      </Flex>
+                    </SpecsGrid>
+
+                    <FeaturesRow $direction="row" $wrap $gap="0.25rem">
+                      {vehicle.features.slice(0, 3).map((feature) => (
+                        <Badge key={feature} $variant="secondary">{feature}</Badge>
+                      ))}
+                    </FeaturesRow>
+                    
+                    <Flex $direction="row" $justify="space-between" $align="center">
+                      <PriceSection>
+                        <Heading $level={2} $mb="0">${vehicle.pricePerDay}</Heading>
+                        <Text $size="sm">per day</Text>
+                      </PriceSection>
+                      <Button>Reserve Now</Button>
+                    </Flex>
+                  </CardBody>
+                </Card>
+              ))}
+            </Grid>
+          )}
+        </Container>
+      </Section>
+    </PageWrapper>
+  );
+};

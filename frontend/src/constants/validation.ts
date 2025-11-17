@@ -1,6 +1,7 @@
 // Validation constants and patterns
 export const VALIDATION_PATTERNS = {
   EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  PHONE: /^[+]?[(]?[0-9]{1,3}[)]?[-\s.]?[(]?[0-9]{1,3}[)]?[-\s.]?[0-9]{3,5}[-\s.]?[0-9]{3,6}$/,
 } as const;
 
 export const VALIDATION_MESSAGES = {
@@ -23,6 +24,9 @@ export const VALIDATION_MESSAGES = {
   CONFIRM_PASSWORD: {
     REQUIRED: 'Please confirm your password',
     MATCH: 'Passwords do not match',
+  },
+  PHONE: {
+    INVALID: 'Please enter a valid phone number',
   },
   AUTH: {
     INVALID_CREDENTIALS: 'Invalid email or password',
