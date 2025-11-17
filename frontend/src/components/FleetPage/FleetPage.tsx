@@ -247,7 +247,7 @@ export const FleetPage = () => {
                         <Heading $level={2} $mb="0">${vehicle.pricePerDay}</Heading>
                         <Text $size="sm">per day</Text>
                       </PriceSection>
-                      <Button>Reserve Now</Button>
+                      <Button onClick={() => router.push(`/booking?carId=${vehicle.id}`)}>Reserve Now</Button>
                     </Flex>
                   </CardBody>
                 </Card>
