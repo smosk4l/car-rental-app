@@ -1,5 +1,38 @@
 import styled from 'styled-components';
 
+export const NavButton = styled.button`
+  height: 2rem;
+  width: 2rem;
+  background-color: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: ${({ theme }) => theme.radii.md};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: ${({ theme }) => theme.colors.gray700};
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.colors.gray100};
+    border-color: ${({ theme }) => theme.colors.gray400};
+    color: ${({ theme }) => theme.colors.dark};
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: ${({ theme }) => theme.colors.gray200};
+  }
+
+  svg {
+    height: 1rem;
+    width: 1rem;
+  }
+`;
+
 export const StyledCalendar = styled.div`
   padding: 0.75rem;
 
@@ -26,62 +59,25 @@ export const StyledCalendar = styled.div`
   /* Caption (month/year header) */
   .rdp-caption {
     display: flex;
-    justify-content: center;
-    padding-top: 0.25rem;
-    position: relative;
     align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    width: 100%;
   }
 
   .rdp-caption_label {
     font-size: ${({ theme }) => theme.fontSizes.sm};
     font-weight: ${({ theme }) => theme.fontWeights.medium};
+    text-align: center;
+    flex: 1;
+    line-height: 2rem;
   }
 
-  /* Navigation */
+  /* Hide default DayPicker navigation */
   .rdp-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .rdp-nav_button {
-    height: 1.75rem;
-    width: 1.75rem;
-    background-color: transparent;
-    padding: 0;
-    opacity: 0.5;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: ${({ theme }) => theme.radii.md};
-    border: 1px solid ${({ theme }) => theme.colors.gray300};
-    cursor: pointer;
-    transition: opacity 0.2s;
-    position: absolute;
-    color: ${({ theme }) => theme.colors.gray700};
-
-    &:hover:not(:disabled) {
-      opacity: 1;
-      background-color: ${({ theme }) => theme.colors.gray100};
-    }
-
-    &:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    svg {
-      height: 1rem;
-      width: 1rem;
-    }
-  }
-
-  .rdp-nav_button_previous {
-    left: 0.25rem;
-  }
-
-  .rdp-nav_button_next {
-    right: 0.25rem;
+    display: none !important;
   }
 
   /* Table */
@@ -95,11 +91,15 @@ export const StyledCalendar = styled.div`
   }
 
   .rdp-head_cell {
-    color: ${({ theme }) => theme.colors.gray600};
+    color: ${({ theme }) => theme.colors.gray500};
     border-radius: ${({ theme }) => theme.radii.md};
     width: 2.25rem;
     font-weight: ${({ theme }) => theme.fontWeights.normal};
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .rdp-tbody {
@@ -164,14 +164,26 @@ export const StyledCalendar = styled.div`
     border-radius: ${({ theme }) => theme.radii.md};
     transition: background-color 0.2s, color 0.2s;
     color: ${({ theme }) => theme.colors.dark};
+    text-align: center;
+    pointer-events: auto;
 
     &:hover:not(:disabled) {
       background-color: ${({ theme }) => theme.colors.gray200};
     }
 
+    &:focus {
+      outline: none;
+    }
+
     &[aria-selected="true"] {
       opacity: 1;
     }
+  }
+  
+  .rdp-day_button {
+    width: 100%;
+    height: 100%;
+    border-radius: ${({ theme }) => theme.radii.md};
   }
 
   /* Selected day */
@@ -232,4 +244,5 @@ export const StyledCalendar = styled.div`
   .rdp-day_hidden {
     visibility: hidden;
   }
+    
 `;

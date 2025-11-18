@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ButtonStyleProps {
-  $variant?: 'primary' | 'secondary' | 'danger' | 'success';
+  $variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'outline';
   $size?: 'sm' | 'md' | 'lg';
   $fullWidth?: boolean;
 }
@@ -41,6 +41,17 @@ export const StyledButton = styled.button<ButtonStyleProps>`
           color: ${theme.colors.white};
           &:hover:not(:disabled) {
             opacity: 0.9;
+          }
+        `;
+      case 'outline':
+        return `
+          background-color: ${theme.colors.white};
+          color: ${theme.colors.gray600};
+          border: 1px solid ${theme.colors.gray300};
+          &:hover:not(:disabled) {
+            background-color: ${theme.colors.primary};
+            color: ${theme.colors.white};
+            border-color: ${theme.colors.primary};
           }
         `;
       default:

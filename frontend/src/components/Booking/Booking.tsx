@@ -273,9 +273,10 @@ const Booking = () => {
                           <PopoverTrigger asChild>
                             <Button
                               id="pickup-date"
-                              variant="secondary"
+                              variant="outline"
                               fullWidth
                               style={{
+                                height: '2.5rem',
                                 justifyContent: 'flex-start',
                                 textAlign: 'left',
                                 fontWeight: 'normal',
@@ -292,7 +293,6 @@ const Booking = () => {
                               selected={pickupDate}
                               onSelect={setPickupDate}
                               disabled={(date) => date < new Date()}
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>
@@ -345,9 +345,10 @@ const Booking = () => {
                           <PopoverTrigger asChild>
                             <Button
                               id="return-date"
-                              variant="secondary"
+                              variant="outline"
                               fullWidth
                               style={{
+                                height: '2.5rem',
                                 justifyContent: 'flex-start',
                                 textAlign: 'left',
                                 fontWeight: 'normal',
@@ -364,7 +365,6 @@ const Booking = () => {
                               selected={returnDate}
                               onSelect={setReturnDate}
                               disabled={(date) => date < (pickupDate || new Date())}
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>
