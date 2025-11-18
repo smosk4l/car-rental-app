@@ -1,27 +1,26 @@
 import { Router } from 'express';
-import { authenticate } from '../middleware/auth';
+import { authenticate, authorize } from '../middleware/auth';
+import {
+  createReservation,
+  getUserReservations,
+  getReservationById,
+  updateReservation,
+  cancelReservation,
+  getAllReservations,
+  updateReservationStatus,
+} from '../controllers/reservationController';
 
 const router = Router();
 
-// TODO: Add reservation controller functions
-router.get('/', authenticate, (req, res) => {
-  res.json({ message: 'Get reservations endpoint - TODO' });
-});
+// User routes (authenticated users can manage their own reservations)
+router.get('/', authenticate, getUserReservations);
+router.post('/', authenticate, createReservation);
+router.get('/:id', authenticate, getReservationById);
+router.put('/:id', authenticate, updateReservation);
+router.delete('/:id', authenticate, cancelReservation);
 
-router.post('/', authenticate, (req, res) => {
-  res.json({ message: 'Create reservation endpoint - TODO' });
-});
-
-router.get('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Get reservation by ID endpoint - TODO' });
-});
-
-router.put('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Update reservation endpoint - TODO' });
-});
-
-router.delete('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Cancel reservation endpoint - TODO' });
-});
+// Admin routes (admin-only access)
+router.get('/admin/all', authenticate, authorize(['ADMIN']), getAllReservations);
+router.patch('/:id/status', authenticate, authorize(['ADMIN']), updateReservationStatus);
 
 export default router;
