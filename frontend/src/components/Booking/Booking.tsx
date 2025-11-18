@@ -9,13 +9,14 @@ import { Label } from "@/components/UI/Label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/UI/Card";
 import { Calendar } from "@/components/UI/Calendar/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/UI/Popover/Popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/UI/Select";
+import { Select, SelectItem } from "@/components/UI/Select";
 import { Separator } from "@/components/UI/Separator";
 import { Badge } from "@/components/UI/Badge";
 import { CalendarIcon, MapPin, Clock, Users, Fuel, Settings, ArrowLeft, Check, Loader2, AlertCircle } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { toast } from "@/hooks/useToast";
 import { useCar } from "@/hooks/useCars";
+import { useCreateReservation } from "@/hooks/useReservations";
 import {
   PageContainer,
   Header,
@@ -74,6 +75,9 @@ const Booking = () => {
 
   // Fetch car data from API
   const { data: selectedCar, isLoading, error } = useCar(carId || "");
+
+  // Reservation mutation
+  const createReservation = useCreateReservation();
 
   const [pickupDate, setPickupDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
@@ -157,7 +161,18 @@ const Booking = () => {
     return days * selectedCar.pricePerDay;
   };
 
-  const handleBooking = () => {
+  // Helper function to combine date and time into ISO datetime string
+  const combineDateAndTime = (date: Date, time: string): string => {
+    const [hours, minutes] = time.split(':');
+    const combined = new Date(date);
+    combined.setHours(parseInt(hours, 10));
+    combined.setMinutes(parseInt(minutes, 10));
+    combined.setSeconds(0);
+    combined.setMilliseconds(0);
+    return combined.toISOString();
+  };
+
+  const handleBooking = async () => {
     if (!pickupDate || !returnDate || !pickupLocation || !returnLocation) {
       toast({
         title: "Missing Information",
@@ -167,11 +182,43 @@ const Booking = () => {
       return;
     }
 
-    // Generate booking ID
-    const bookingId = `BK${Date.now().toString().slice(-8)}`;
+    if (!carId) {
+      toast({
+        title: "Error",
+        description: "No car selected.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Navigate to confirmation page with booking details
-    router.push(`/booking/confirmation?bookingId=${bookingId}`);
+    try {
+      // Combine dates and times into ISO datetime strings
+      const startDate = combineDateAndTime(pickupDate, pickupTime);
+      const endDate = combineDateAndTime(returnDate, returnTime);
+
+      // Create reservation via API
+      const result = await createReservation.mutateAsync({
+        carId,
+        startDate,
+        endDate,
+        pickupLocation,
+        returnLocation,
+        pickupTime,
+        returnTime,
+      });
+
+      // Show success message
+      toast({
+        title: "Reservation Created",
+        description: "Your booking has been confirmed!",
+      });
+
+      // Navigate to confirmation page with actual reservation ID
+      router.push(`/booking/confirmation?reservationId=${result.reservation.id}`);
+    } catch (error) {
+      // Error handling is already done in the mutation hook
+      console.error('Booking error:', error);
+    }
   };
 
   const days = pickupDate && returnDate ? Math.max(1, differenceInDays(returnDate, pickupDate)) : 0;
@@ -253,17 +300,17 @@ const Booking = () => {
                     <FormGrid>
                       <FormField>
                         <Label htmlFor="pickup-location">Location</Label>
-                        <Select value={pickupLocation} onValueChange={setPickupLocation}>
-                          <SelectTrigger id="pickup-location">
-                            <SelectValue placeholder="Select pickup location" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {locations.map((location) => (
-                              <SelectItem key={location} value={location}>
-                                {location}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
+                        <Select
+                          id="pickup-location"
+                          value={pickupLocation}
+                          onChange={(e) => setPickupLocation(e.target.value)}
+                        >
+                          <SelectItem value="">Select pickup location</SelectItem>
+                          {locations.map((location) => (
+                            <SelectItem key={location} value={location}>
+                              {location}
+                            </SelectItem>
+                          ))}
                         </Select>
                       </FormField>
 
@@ -325,17 +372,17 @@ const Booking = () => {
                     <FormGrid>
                       <FormField>
                         <Label htmlFor="return-location">Location</Label>
-                        <Select value={returnLocation} onValueChange={setReturnLocation}>
-                          <SelectTrigger id="return-location">
-                            <SelectValue placeholder="Select return location" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {locations.map((location) => (
-                              <SelectItem key={location} value={location}>
-                                {location}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
+                        <Select
+                          id="return-location"
+                          value={returnLocation}
+                          onChange={(e) => setReturnLocation(e.target.value)}
+                        >
+                          <SelectItem value="">Select return location</SelectItem>
+                          {locations.map((location) => (
+                            <SelectItem key={location} value={location}>
+                              {location}
+                            </SelectItem>
+                          ))}
                         </Select>
                       </FormField>
 
@@ -448,9 +495,16 @@ const Booking = () => {
                       onClick={handleBooking}
                       fullWidth
                       size="lg"
-                      disabled={!pickupDate || !returnDate || !pickupLocation || !returnLocation}
+                      disabled={!pickupDate || !returnDate || !pickupLocation || !returnLocation || createReservation.isPending}
                     >
-                      Confirm Booking
+                      {createReservation.isPending ? (
+                        <>
+                          <Loader2 style={{ marginRight: '0.5rem', height: '1rem', width: '1rem', animation: 'spin 1s linear infinite' }} />
+                          Creating Reservation...
+                        </>
+                      ) : (
+                        'Confirm Booking'
+                      )}
                     </Button>
 
                     <DisclaimerText>
