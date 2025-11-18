@@ -1,27 +1,5 @@
-import styled, { keyframes } from 'styled-components';
-
-// Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const scaleIn = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
+import styled from 'styled-components';
+import { fadeInUp as fadeIn, scaleIn } from '@/styles/animations';
 
 // Layout Components
 export const Section = styled.section`

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { Card } from '@/components/UI/Card';
 import { Badge } from '@/components/UI/Badge';
+import { fadeInUp, fadeInScale } from '@/styles/animations';
 
 export const SectionContainer = styled.section`
   padding: 5rem 0; /* py-20 */
@@ -21,18 +22,7 @@ export const Container = styled.div`
 export const HeaderContainer = styled.div`
   text-align: center;
   margin-bottom: 4rem; /* mb-16 */
-  animation: fadeIn 0.6s ease-out;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  animation: ${fadeInUp} 0.6s ease-out;
 `;
 
 export const MainHeading = styled.h2`
@@ -72,24 +62,13 @@ export const CarCard = styled(Card)<{ $animationDelay?: string }>`
   border: none;
   box-shadow: ${({ theme }) => theme.shadows.md};
   transition: all 0.3s ease;
-  animation: scaleIn 0.6s ease-out;
+  animation: ${fadeInScale} 0.6s ease-out;
   animation-delay: ${({ $animationDelay }) => $animationDelay || '0s'};
   animation-fill-mode: both;
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.xl};
     transform: scale(1.05);
-  }
-
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
   }
 `;
 

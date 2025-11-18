@@ -1,16 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
-
-// Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
+import styled, { css } from 'styled-components';
+import { scaleIn as fadeIn } from '@/styles/animations';
 
 export const DropdownContainer = styled.div`
   position: relative;

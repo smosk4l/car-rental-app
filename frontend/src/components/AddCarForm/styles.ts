@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '@/styles/theme';
+import { spin } from '@/styles/animations';
 
 export const FormContainer = styled.div`
   background: ${theme.colors.white};
@@ -219,11 +220,5 @@ export const LoadingSpinner = styled.div`
   border: 2px solid transparent;
   border-top: 2px solid currentColor;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  animation: ${spin} 1s linear infinite;
 `;

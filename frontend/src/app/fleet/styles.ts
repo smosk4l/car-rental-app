@@ -1,26 +1,5 @@
-import styled, { keyframes } from 'styled-components';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const scaleIn = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
+import styled from 'styled-components';
+import { fadeInUp, scaleIn } from '@/styles/animations';
 
 // Reusable container with max-width
 export const Container = styled.div<{ $padding?: string }>`
@@ -84,7 +63,7 @@ export const HeroContent = styled.div`
   max-width: 48rem;
   margin: 0 auto 2rem;
   text-align: center;
-  animation: ${fadeIn} 0.6s ease-out;
+  animation: ${fadeInUp} 0.6s ease-out;
 `;
 
 // Input wrapper with icon support

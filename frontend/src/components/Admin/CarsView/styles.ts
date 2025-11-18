@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { TableCell } from '@/components/Table';
+import { spin } from '@/styles/animations';
 
 export const Container = styled.div`
   display: flex;
@@ -218,16 +219,7 @@ export const LoadingContainer = styled.div`
   color: ${({ theme }) => theme.colors.gray600};
 
   svg {
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+    animation: ${spin} 1s linear infinite;
   }
 `;
 

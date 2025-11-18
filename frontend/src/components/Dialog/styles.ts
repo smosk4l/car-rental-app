@@ -1,45 +1,5 @@
-import styled, { keyframes, css } from 'styled-components';
-
-// Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.96);
-  }
-`;
+import styled, { css } from 'styled-components';
+import { fadeIn, fadeOut, dialogSlideIn as slideIn, dialogSlideOut as slideOut } from '@/styles/animations';
 
 export const Overlay = styled.div<{ isOpen: boolean }>`
   position: fixed;

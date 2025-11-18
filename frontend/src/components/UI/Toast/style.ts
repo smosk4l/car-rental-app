@@ -1,49 +1,15 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import * as ToastPrimitives from '@radix-ui/react-toast';
+import { fadeIn, slideInFromTop, slideInFromBottom, slideOutToRight } from '@/styles/animations';
 
-// Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
+// Note: fadeOut animation for toast uses opacity 0.8 instead of standard 0
+import { keyframes } from 'styled-components';
 const fadeOut = keyframes`
   from {
     opacity: 1;
   }
   to {
     opacity: 0.8;
-  }
-`;
-
-const slideInFromTop = keyframes`
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideInFromBottom = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideOutToRight = keyframes`
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
   }
 `;
 

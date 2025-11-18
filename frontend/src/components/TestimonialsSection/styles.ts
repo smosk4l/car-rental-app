@@ -2,32 +2,7 @@ import styled from 'styled-components';
 import { Card, CardContent } from '@/components/UI/Card';
 import { Avatar, AvatarFallback } from '@/components/UI/Avatar';
 import { Star } from 'lucide-react';
-
-const fadeInAnimation = `
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-`;
-
-const scaleInAnimation = `
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-`;
+import { fadeInUp, fadeInScale } from '@/styles/animations';
 
 export const SectionContainer = styled.section`
   padding: 5rem 0;
@@ -47,8 +22,7 @@ export const Container = styled.div`
 export const HeaderContainer = styled.div`
   text-align: center;
   margin-bottom: 4rem;
-  animation: fadeIn 0.6s ease-out;
-  ${fadeInAnimation}
+  animation: ${fadeInUp} 0.6s ease-out;
 `;
 
 export const MainHeading = styled.h2`
@@ -85,10 +59,9 @@ export const TestimonialCard = styled(Card)<{ $animationDelay?: string }>`
   border: none;
   box-shadow: ${({ theme }) => theme.shadows.md};
   transition: all 0.3s ease;
-  animation: scaleIn 0.6s ease-out;
+  animation: ${fadeInScale} 0.6s ease-out;
   animation-delay: ${({ $animationDelay }) => $animationDelay || '0s'};
   animation-fill-mode: both;
-  ${scaleInAnimation}
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.xl};

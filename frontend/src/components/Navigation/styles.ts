@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { Button } from '@/components/UI/Button';
 import Link from 'next/link';
 import { theme } from '@/styles/theme';
+import { mobileMenuFadeIn as fadeIn } from '@/styles/animations';
 
 // Mixins
 const responsiveHidden = css`
@@ -125,18 +126,7 @@ export const MobileMenu = styled.div<{ $isOpen: boolean }>`
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding: ${theme.spaces.md} 0;
-  animation: fadeIn 0.2s ease-in-out;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
 export const MobileMenuContent = styled.div`

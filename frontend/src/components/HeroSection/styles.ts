@@ -1,28 +1,7 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import Image from 'next/image';
 import { Button } from '@/components/UI/Button';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+import { fadeInSlideUp as fadeIn, slideUp } from '@/styles/animations';
 
 const glassmorphism = `
   background: rgba(255, 255, 255, 0.1);

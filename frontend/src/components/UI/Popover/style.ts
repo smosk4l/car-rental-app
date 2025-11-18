@@ -1,78 +1,15 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-
-// Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
-const zoomIn = keyframes`
-  from {
-    transform: scale(0.95);
-  }
-  to {
-    transform: scale(1);
-  }
-`;
-
-const zoomOut = keyframes`
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0.95);
-  }
-`;
-
-const slideInFromTop = keyframes`
-  from {
-    transform: translateY(-0.5rem);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideInFromBottom = keyframes`
-  from {
-    transform: translateY(0.5rem);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideInFromLeft = keyframes`
-  from {
-    transform: translateX(-0.5rem);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
-const slideInFromRight = keyframes`
-  from {
-    transform: translateX(0.5rem);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
+import {
+  fadeIn,
+  fadeOut,
+  zoomIn,
+  zoomOut,
+  slideDownSmall as slideInFromTop,
+  slideUpSmall as slideInFromBottom,
+  slideInFromLeft,
+  slideInFromRight
+} from '@/styles/animations';
 
 export const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   z-index: 50;
