@@ -1,20 +1,16 @@
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
+import { getAllUsers, getProfile, updateProfile, suspendUser, deleteUser } from '../controllers/userController';
 
 const router = Router();
 
-// TODO: Add user controller functions
-router.get('/profile', authenticate, (req, res) => {
-  res.json({ message: 'Get user profile endpoint - TODO' });
-});
-
-router.put('/profile', authenticate, (req, res) => {
-  res.json({ message: 'Update user profile endpoint - TODO' });
-});
+// User profile routes
+router.get('/profile', authenticate, getProfile);
+router.put('/profile', authenticate, updateProfile);
 
 // Admin-only routes
-router.get('/', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'Get all users endpoint - TODO' });
-});
+router.get('/', authenticate, authorize(['ADMIN']), getAllUsers);
+router.patch('/:id/suspend', authenticate, authorize(['ADMIN']), suspendUser);
+router.delete('/:id', authenticate, authorize(['ADMIN']), deleteUser);
 
 export default router;

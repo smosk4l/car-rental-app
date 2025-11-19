@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import ConfirmDialog from '@/components/ConfirmDialog';
+import { useUsers, useSuspendUser, useDeleteUser } from '@/hooks/useUsers';
+import type { User } from '@/lib/api/users';
 import {
   Table,
   TableBody,
@@ -24,6 +27,8 @@ import {
   CheckCircle,
   Users as UsersIcon,
   UserPlus,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import {
   Container,
@@ -48,118 +53,114 @@ import {
   TableHeaderRow,
   UserInfo,
   Avatar,
-  AvatarImage,
   UserName,
-  ContactInfo,
   Email,
   Phone,
   Badge,
   Button,
   EmptyState,
+  LoadingContainer,
+  ErrorContainer,
 } from './styles';
-
-// Mock user data
-const mockUsers = [
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
-    phone: '+1 (555) 123-4567',
-    status: 'active',
-    role: 'customer',
-    joinDate: '2024-01-15',
-    totalBookings: 12,
-    totalSpent: '$2,840',
-    avatar: '',
-  },
-  {
-    id: '2',
-    name: 'Michael Chen',
-    email: 'michael.chen@email.com',
-    phone: '+1 (555) 234-5678',
-    status: 'active',
-    role: 'customer',
-    joinDate: '2024-02-03',
-    totalBookings: 8,
-    totalSpent: '$1,920',
-    avatar: '',
-  },
-  {
-    id: '3',
-    name: 'Emily Rodriguez',
-    email: 'emily.rodriguez@email.com',
-    phone: '+1 (555) 345-6789',
-    status: 'suspended',
-    role: 'customer',
-    joinDate: '2023-11-22',
-    totalBookings: 15,
-    totalSpent: '$3,150',
-    avatar: '',
-  },
-  {
-    id: '4',
-    name: 'David Kim',
-    email: 'david.kim@email.com',
-    phone: '+1 (555) 456-7890',
-    status: 'active',
-    role: 'admin',
-    joinDate: '2023-08-10',
-    totalBookings: 0,
-    totalSpent: '$0',
-    avatar: '',
-  },
-  {
-    id: '5',
-    name: 'Lisa Thompson',
-    email: 'lisa.thompson@email.com',
-    phone: '+1 (555) 567-8901',
-    status: 'inactive',
-    role: 'customer',
-    joinDate: '2024-03-07',
-    totalBookings: 3,
-    totalSpent: '$720',
-    avatar: '',
-  },
-];
 
 const UsersView = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [users] = useState(mockUsers);
+  const [userToSuspend, setUserToSuspend] = useState<User | null>(null);
+  const [showSuspendConfirm, setShowSuspendConfirm] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  // Fetch users using React Query
+  const { data, isLoading, error } = useUsers();
+  const suspendUserMutation = useSuspendUser();
+  const deleteUserMutation = useDeleteUser();
+
+  const users = data?.users || [];
 
   const filteredUsers = users.filter(
     user =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'active':
-        return <Badge variant="success">Active</Badge>;
-      case 'suspended':
-        return <Badge variant="danger">Suspended</Badge>;
-      case 'inactive':
-        return <Badge variant="secondary">Inactive</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
-  };
-
   const getRoleBadge = (role: string) => {
     switch (role) {
-      case 'admin':
+      case 'ADMIN':
         return <Badge variant="default">Admin</Badge>;
-      case 'customer':
-        return <Badge variant="outline">Customer</Badge>;
+      case 'USER':
+        return <Badge variant="outline">User</Badge>;
       default:
         return <Badge variant="outline">{role}</Badge>;
     }
   };
 
-  const handleUserAction = (action: string, userId: string) => {
-    console.log(`${action} user:`, userId);
-    // TODO: Implement user actions
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'ACTIVE':
+        return <Badge variant="success">Active</Badge>;
+      case 'SUSPENDED':
+        return <Badge variant="danger">Suspended</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
   };
+
+  const handleSuspendUser = (user: User) => {
+    setUserToSuspend(user);
+    setShowSuspendConfirm(true);
+  };
+
+  const handleConfirmSuspend = () => {
+    if (userToSuspend) {
+      suspendUserMutation.mutate(userToSuspend.id);
+      setUserToSuspend(null);
+      setShowSuspendConfirm(false);
+    }
+  };
+
+  const handleDeleteUser = (user: User) => {
+    setUserToDelete(user);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (userToDelete) {
+      deleteUserMutation.mutate(userToDelete.id);
+      setUserToDelete(null);
+      setShowDeleteConfirm(false);
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <Container>
+        <LoadingContainer>
+          <Loader2 className="animate-spin" size={48} />
+          <p>Loading users...</p>
+        </LoadingContainer>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <ErrorContainer>
+          <AlertCircle size={48} />
+          <h3>Error loading users</h3>
+          <p>Please try again later</p>
+        </ErrorContainer>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -197,7 +198,7 @@ const UsersView = () => {
               <StatInfo>
                 <StatLabel>Active Users</StatLabel>
                 <StatValue>
-                  {users.filter(u => u.status === 'active').length}
+                  {users.length}
                 </StatValue>
               </StatInfo>
               <IconWrapper color="#10b981">
@@ -211,13 +212,13 @@ const UsersView = () => {
           <CardContent>
             <StatContent>
               <StatInfo>
-                <StatLabel>Suspended</StatLabel>
+                <StatLabel>Regular Users</StatLabel>
                 <StatValue>
-                  {users.filter(u => u.status === 'suspended').length}
+                  {users.filter(u => u.role === 'USER').length}
                 </StatValue>
               </StatInfo>
-              <IconWrapper color="#ef4444">
-                <Ban />
+              <IconWrapper color="#6b7280">
+                <UsersIcon />
               </IconWrapper>
             </StatContent>
           </CardContent>
@@ -229,7 +230,7 @@ const UsersView = () => {
               <StatInfo>
                 <StatLabel>Admins</StatLabel>
                 <StatValue>
-                  {users.filter(u => u.role === 'admin').length}
+                  {users.filter(u => u.role === 'ADMIN').length}
                 </StatValue>
               </StatInfo>
               <IconWrapper color="#3b82f6">
@@ -267,12 +268,11 @@ const UsersView = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>User</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Phone</TableHead>
                   <TableHead>Role</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Join Date</TableHead>
-                  <TableHead>Bookings</TableHead>
-                  <TableHead>Total Spent</TableHead>
                   <TableHead style={{ textAlign: 'right' }}>Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -282,29 +282,20 @@ const UsersView = () => {
                     <TableCell>
                       <UserInfo>
                         <Avatar>
-                          {user.avatar ? (
-                            <AvatarImage src={user.avatar} alt={user.name} />
-                          ) : (
-                            user.name
-                              .split(' ')
-                              .map(n => n[0])
-                              .join('')
-                          )}
+                          {user.firstName[0]}{user.lastName[0]}
                         </Avatar>
-                        <UserName>{user.name}</UserName>
+                        <UserName>{user.firstName} {user.lastName}</UserName>
                       </UserInfo>
                     </TableCell>
                     <TableCell>
-                      <ContactInfo>
-                        <Email>{user.email}</Email>
-                        <Phone>{user.phone}</Phone>
-                      </ContactInfo>
+                      <Email>{user.email}</Email>
                     </TableCell>
-                    <TableCell>{getStatusBadge(user.status)}</TableCell>
+                    <TableCell>
+                      <Phone>{user.phone || 'N/A'}</Phone>
+                    </TableCell>
                     <TableCell>{getRoleBadge(user.role)}</TableCell>
-                    <TableCell>{user.joinDate}</TableCell>
-                    <TableCell>{user.totalBookings}</TableCell>
-                    <TableCell>{user.totalSpent}</TableCell>
+                    <TableCell>{getStatusBadge(user.status)}</TableCell>
+                    <TableCell>{formatDate(user.createdAt)}</TableCell>
                     <TableCell style={{ textAlign: 'right' }}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -314,7 +305,7 @@ const UsersView = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="right">
                           <DropdownMenuItem
-                            onSelect={() => handleUserAction('edit', user.id)}
+                            onSelect={() => console.log('Edit user:', user.id)}
                           >
                             <Edit
                               style={{
@@ -326,21 +317,34 @@ const UsersView = () => {
                             Edit User
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onSelect={() =>
-                              handleUserAction('suspend', user.id)
-                            }
+                            onSelect={() => handleSuspendUser(user)}
                           >
-                            <Ban
-                              style={{
-                                marginRight: '8px',
-                                width: '16px',
-                                height: '16px',
-                              }}
-                            />
-                            Suspend User
+                            {user.status === 'SUSPENDED' ? (
+                              <>
+                                <CheckCircle
+                                  style={{
+                                    marginRight: '8px',
+                                    width: '16px',
+                                    height: '16px',
+                                  }}
+                                />
+                                Reactivate User
+                              </>
+                            ) : (
+                              <>
+                                <Ban
+                                  style={{
+                                    marginRight: '8px',
+                                    width: '16px',
+                                    height: '16px',
+                                  }}
+                                />
+                                Suspend User
+                              </>
+                            )}
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onSelect={() => handleUserAction('delete', user.id)}
+                            onSelect={() => handleDeleteUser(user)}
                             variant="danger"
                           >
                             <Trash2
@@ -362,6 +366,38 @@ const UsersView = () => {
           )}
         </CardContent>
       </TableContainer>
+
+      <ConfirmDialog
+        open={showSuspendConfirm}
+        onOpenChange={setShowSuspendConfirm}
+        title={userToSuspend?.status === 'SUSPENDED' ? 'Reactivate User' : 'Suspend User'}
+        description={
+          userToSuspend
+            ? userToSuspend.status === 'SUSPENDED'
+              ? `Are you sure you want to reactivate ${userToSuspend.firstName} ${userToSuspend.lastName}? They will be able to access their account again.`
+              : `Are you sure you want to suspend ${userToSuspend.firstName} ${userToSuspend.lastName}? They will not be able to access their account until reactivated.`
+            : ''
+        }
+        confirmText={userToSuspend?.status === 'SUSPENDED' ? 'Reactivate' : 'Suspend'}
+        cancelText="Cancel"
+        variant="danger"
+        onConfirm={handleConfirmSuspend}
+      />
+
+      <ConfirmDialog
+        open={showDeleteConfirm}
+        onOpenChange={setShowDeleteConfirm}
+        title="Delete User"
+        description={
+          userToDelete
+            ? `Are you sure you want to delete ${userToDelete.firstName} ${userToDelete.lastName}? This action cannot be undone and will permanently remove all user data.`
+            : ''
+        }
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+        onConfirm={handleConfirmDelete}
+      />
     </Container>
   );
 };

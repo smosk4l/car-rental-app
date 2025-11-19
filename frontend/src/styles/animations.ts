@@ -81,23 +81,27 @@ export const slideUpSmall = createSlideY("0.5rem");
 export const slideDownSmall = createSlideY("-0.5rem");
 
 // DIALOG/MODAL
-export const dialogSlideIn = createFadeSlideScale({
-  fadeFrom: 0,
-  fadeTo: 1,
-  scaleFrom: 0.96,
-  scaleTo: 1,
-  x: "-50%",
-  y: "-50%",
-});
+export const dialogSlideIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+`;
 
-export const dialogSlideOut = createFadeSlideScale({
-  fadeFrom: 1,
-  fadeTo: 0,
-  scaleFrom: 1,
-  scaleTo: 0.96,
-  x: "-50%",
-  y: "-50%",
-});
+export const dialogSlideOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+`;
 
 // ROTATION
 export const spin = keyframes`

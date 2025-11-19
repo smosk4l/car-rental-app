@@ -304,3 +304,45 @@ export const EmptyState = styled.div`
   padding: ${({ theme }) => theme.spaces['2xl']};
   color: ${({ theme }) => theme.colors.gray600};
 `;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spaces.md};
+  padding: ${({ theme }) => theme.spaces['2xl']};
+  min-height: 400px;
+  color: ${({ theme }) => theme.colors.gray600};
+
+  svg {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spaces.md};
+  padding: ${({ theme }) => theme.spaces['2xl']};
+  min-height: 400px;
+  text-align: center;
+
+  svg {
+    color: ${({ theme }) => theme.colors.danger};
+  }
+
+  h3 {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-weight: ${({ theme }) => theme.fontWeights.semibold};
+    color: ${({ theme }) => theme.colors.gray900};
+    margin: 0;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.gray600};
+    margin: 0;
+  }
+`;

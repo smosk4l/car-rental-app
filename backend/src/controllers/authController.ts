@@ -87,6 +87,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    // Check user status
+    if (user.status === 'SUSPENDED') {
+      res.status(403).json({ error: 'Account suspended. Please contact support.' });
+      return;
+    }
+
     const isValidPassword = await comparePassword(password, user.password);
 
     if (!isValidPassword) {
