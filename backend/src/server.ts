@@ -5,6 +5,7 @@ import authRoutes from './routes/auth';
 import carRoutes from './routes/cars';
 import reservationRoutes from './routes/reservations';
 import userRoutes from './routes/users';
+import locationRoutes from './routes/locations';
 
 validateConfig();
 
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/locations', locationRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Car Rental API is running' });

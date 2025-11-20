@@ -6,6 +6,7 @@ import {
   CreditCard,
   HelpCircle,
   Settings,
+  MapPin,
 } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 
@@ -20,6 +21,7 @@ export const ADMIN_NAVIGATION_ITEMS: NavigationItem[] = [
   { label: 'Bookings', href: '/admin/bookings', icon: Calendar },
   { label: 'Users', href: '/admin/users', icon: Users },
   { label: 'Cars', href: '/admin/cars', icon: Car },
+  { label: 'Locations', href: '/admin/locations', icon: MapPin },
   { label: 'Payments', href: '/admin/payments', icon: CreditCard },
   { label: 'Support', href: '/admin/support', icon: HelpCircle },
   { label: 'Settings', href: '/admin/settings', icon: Settings },

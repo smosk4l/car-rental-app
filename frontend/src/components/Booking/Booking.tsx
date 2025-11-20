@@ -17,6 +17,8 @@ import { format, differenceInDays } from "date-fns";
 import { toast } from "@/hooks/useToast";
 import { useCar } from "@/hooks/useCars";
 import { useCreateReservation } from "@/hooks/useReservations";
+import { useLocations } from "@/hooks/useLocations";
+import type { Location } from "@/lib/api/locations";
 import {
   PageContainer,
   Header,
@@ -60,14 +62,6 @@ import {
   ErrorCard,
 } from "./style";
 
-const locations = [
-  "Downtown Office - 123 Main St",
-  "Airport Terminal - Gate 5",
-  "North Station - 456 Oak Ave",
-  "South Mall - 789 Elm St",
-  "West Hub - 321 Pine Rd",
-];
-
 const Booking = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -75,6 +69,10 @@ const Booking = () => {
 
   // Fetch car data from API
   const { data: selectedCar, isLoading, error } = useCar(carId || "");
+
+  // Fetch locations from API
+  const { locations } = useLocations();
+  const locationsData = locations.data?.locations || [];
 
   // Reservation mutation
   const createReservation = useCreateReservation();
@@ -304,11 +302,14 @@ const Booking = () => {
                           id="pickup-location"
                           value={pickupLocation}
                           onChange={(e) => setPickupLocation(e.target.value)}
+                          disabled={locations.isLoading}
                         >
-                          <SelectItem value="">Select pickup location</SelectItem>
-                          {locations.map((location) => (
-                            <SelectItem key={location} value={location}>
-                              {location}
+                          <SelectItem value="">
+                            {locations.isLoading ? "Loading locations..." : "Select pickup location"}
+                          </SelectItem>
+                          {locationsData.map((location) => (
+                            <SelectItem key={location.id} value={`${location.name} - ${location.address}`}>
+                              {location.name} - {location.address}
                             </SelectItem>
                           ))}
                         </Select>
@@ -376,11 +377,14 @@ const Booking = () => {
                           id="return-location"
                           value={returnLocation}
                           onChange={(e) => setReturnLocation(e.target.value)}
+                          disabled={locations.isLoading}
                         >
-                          <SelectItem value="">Select return location</SelectItem>
-                          {locations.map((location) => (
-                            <SelectItem key={location} value={location}>
-                              {location}
+                          <SelectItem value="">
+                            {locations.isLoading ? "Loading locations..." : "Select return location"}
+                          </SelectItem>
+                          {locationsData.map((location) => (
+                            <SelectItem key={location.id} value={`${location.name} - ${location.address}`}>
+                              {location.name} - {location.address}
                             </SelectItem>
                           ))}
                         </Select>
